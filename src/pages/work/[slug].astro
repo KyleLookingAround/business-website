@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getSettings, u } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const work = await getCollection('work');
+  return work.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const s = await getSettings();
+const d = entry.data;
+const { Content } = await render(entry);
+---
+<Base
+  title={`${d.client} — ${s.name}`}
+  description={d.summary}
+  nav="work"
+  page={`work/${entry.id}.html`}
+  ogPath={d.image}
+>
+
+  <article>
+    <section class="case-hero">
+      <div class="wrap">
+        <p class="eyebrow"><a href={u('work.html')}>← Work</a></p>
+        <h1>{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="case-figure">
+        {d.image
+          ? <img src={u(d.image)} alt={`${d.client} website`} width="1280" height="720" />
+          : null}
+      </div>
+    </div>
+
+    <section class="section" style="padding-top:1rem">
+      <div class="wrap case-layout">
+        <div class="prose">
+          <Content />
+        </div>
+        <aside class="case-side">
+          <dl>
+            <dt>Client</dt><dd>{d.client}</dd>
+            <dt>Sector</dt><dd>{d.sector}</dd>
+            <dt>Year</dt><dd>{d.year}</dd>
+            {d.stack && (<><dt>Built with</dt><dd>{d.stack}</dd></>)}
+          </dl>
+          <p style="margin-top:1.2rem">
+            <a class="btn btn-primary btn-block" href={d.url} target="_blank" rel="noopener">Visit the live site ↗</a>
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="cta">
+          <h2>Want one like this?</h2>
+          <p>Tell us about your place. We'll be honest about whether a site will help and what it would cost.</p>
+          <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
+        </div>
+      </div>
+    </section>
+  </article>
+
+</Base>

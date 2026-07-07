@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, u } from '../lib/site';
+const s = await getSettings();
+---
+<Base title={`Page not found — ${s.name}`} description="That page has gone the way of a demolished arch." page="404.html">
+  <section class="section">
+    <div class="wrap center">
+      <p class="eyebrow">404</p>
+      <h1>That arch isn't here.</h1>
+      <p class="lead">The page you're after has been rebuilt, renamed, or never laid. Let's get you back on solid ground.</p>
+      <p class="mt-2">
+        <a class="btn btn-primary" href={u('')}>Back to home</a>
+        <a class="btn btn-ghost" href={u('work.html')}>See the work</a>
+      </p>
+    </div>
+  </section>
+</Base>

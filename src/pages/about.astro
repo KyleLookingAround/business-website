@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, getAbout, u } from '../lib/site';
+
+const s = await getSettings();
+const about = await getAbout();
+---
+<Base title={`About — ${s.name}`} description="Viaduct Studios is one engineer building fast, handmade websites for small businesses around Manchester and Stockport." nav="about" page="about.html">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">About</p>
+        <p class="about-lede">{about.lede}</p>
+      </div>
+      <div class="about-body">
+        {about.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      <div class="values">
+        {about.values.map((v) => (
+          <div class="value">
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Built like the viaduct — to carry, and to last.</h2>
+        <p>If that's the sort of thing you're after, let's talk.</p>
+        <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

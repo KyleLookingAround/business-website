@@ -1,0 +1,113 @@
+---
+/**
+ * Viaduct Studios — shared shell: head (meta/OG/JSON-LD), sticky top bar
+ * with the arched wordmark, burger nav, colonnade footer. Every page renders
+ * inside this.
+ */
+import { getSettings, ogImage, jsonLd, encodeMail, NAV, u } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** which top-nav item is highlighted, e.g. 'work' */
+  nav?: string;
+  /** the page's file name, e.g. "work.html" — empty for the home page */
+  page?: string;
+  /** absolute-ish path to a per-page share image, e.g. "/assets/og-work.png" */
+  ogPath?: string;
+}
+
+const { title, description, nav = '', page = '', ogPath } = Astro.props;
+const s = await getSettings();
+const pageUrl = s.url.replace(/\/?$/, '/') + (page === 'index.html' ? '' : page);
+const year = new Date().getFullYear();
+const mail = encodeMail(s.email);
+const current = (n: string) => (nav === n ? 'page' : undefined);
+const wordmark = (extra = '') => `<span class="wordmark ${extra}">`;
+---
+
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+
+<!-- Favicon: an arch on brick, inline SVG -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%239e4a37'/%3E%3Cpath d='M22 82 V50 a28 28 0 0 1 56 0 V82 H60 V50 a10 10 0 0 0-20 0 V82 Z' fill='%23f4efe6'/%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={pageUrl}>
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content={s.name}>
+<meta property="og:image" content={ogImage(s, ogPath)}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogImage(s, ogPath)}>
+
+<link rel="sitemap" href={u('sitemap-index.xml')}>
+
+<link rel="preload" href={u('assets/fonts/bricolagegrotesque-300-800.woff2')} as="font" type="font/woff2" crossorigin>
+<link rel="preload" href={u('assets/fonts/sourceserif4-300-700.woff2')} as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href={u('styles.css')}>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd(s)).replace(/</g, '\\u003c')} />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="wordmark" href={u('')} aria-label={`${s.name} — home`}>
+      <b>Viaduct <em>Studios</em></b>
+      <span class="arch-rule" aria-hidden="true"></span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav" id="site-nav">
+      {NAV.map((item) => (
+        <a href={item.href} aria-current={current(item.label.toLowerCase())}>{item.label}</a>
+      ))}
+      <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<slot />
+</main>
+
+<!-- FOOTER -->
+<div class="footer-arches" aria-hidden="true"></div>
+<footer class="footer">
+  <div class="wrap footer-in">
+    <div>
+      <span class="wordmark"><b>Viaduct <em>Studios</em></b></span>
+      <p class="fine">{s.strapline}</p>
+      <p class="fine">© {year} {s.name} · {s.area}</p>
+    </div>
+    <div class="footer-cols">
+      <nav aria-label="Site">
+        {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <nav aria-label="Elsewhere">
+        <a href={`mailto:${s.email}`} set:html={mail.label}></a>
+        {s.links.github && <a href={s.links.github} target="_blank" rel="noopener">GitHub ↗</a>}
+        {s.links.linkedin && <a href={s.links.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/app.ts"></script>
+</body>
+</html>

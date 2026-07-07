@@ -1,0 +1,19 @@
+# ════════════════════════════════════════════════════════════════════
+#  VIADUCT STUDIOS · about page
+#  (First-person copy — review and make it properly yours before launch.)
+# ════════════════════════════════════════════════════════════════════
+
+lede: "Hello — I'm Kyle. I build software for a living and websites for the places I love out of something between habit and affection."
+
+paragraphs:
+  - "I started as an apprentice, learned the trade the long way round, and these days I spend my working week engineering platforms that have to stay up, stay fast and stay honest. Viaduct Studios is that same care, pointed at the high street."
+  - "It started with a coffee shop. A friend opened one — brilliant coffee, no website, no time. So I built one: fast, warm, and editable from her phone between customers. Then a band needed one. Then it turned out lots of small places around Manchester are stuck choosing between a £30-a-month template that looks like everyone else's, and an agency quote with a comma in it."
+  - "Viaduct Studios is the third option: handmade sites that load instantly, look like the place they belong to, and hand the keys back to you. Named after the Stockport viaduct — twenty-seven brick arches, built by hand, still carrying everything that matters a hundred and eighty years later. That's the standard."
+
+values:
+  - title: "Built to last"
+    body: "No frameworks-of-the-month, no subscriptions holding your site hostage. Plain, sturdy engineering that will still work in ten years."
+  - title: "No airs"
+    body: "Plain English, real prices, honest advice — including \"you don't need this\" when you don't."
+  - title: "Local by default"
+    body: "Sites for round here, by someone from round here. The photos are of your actual shop and the map pin is exactly right."

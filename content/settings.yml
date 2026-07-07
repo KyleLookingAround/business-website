@@ -1,0 +1,33 @@
+# ════════════════════════════════════════════════════════════════════
+#  VIADUCT STUDIOS · settings (name, contact, links)
+#
+#  Edit the text inside the "quotes" — or the easy way, at /admin/ on
+#  the live site.
+# ════════════════════════════════════════════════════════════════════
+
+# The published web address (used for social-share + search metadata).
+# Swap for the custom domain when there is one (and add a public/CNAME file).
+url: "https://kylelookingaround.github.io/business-website/"
+
+name: "Viaduct Studios"
+strapline: "Fast, handmade websites for Manchester's small businesses — that you can update yourself."
+description: "Viaduct Studios builds fast, handmade websites for small businesses around Manchester and Stockport — sites their owners can update themselves."
+
+# ── Where ───────────────────────────────────────────────────────────
+area: "Stockport · Manchester"
+locality: "Stockport"
+region: "Greater Manchester"
+
+# ── Contact ─────────────────────────────────────────────────────────
+# The email is never printed raw in the page source (it's entity-encoded),
+# but swap it for a studio address when the domain exists.
+email: "KyleMck10@hotmail.com"
+
+# Contact form: paste a Formspree (or similar) endpoint URL to switch the
+# contact page from an email button to a real form. Blank = email button.
+formAction: ""
+
+# ── Links (blank = hidden) ──────────────────────────────────────────
+links:
+  github: "https://github.com/KyleLookingAround"
+  linkedin: ""

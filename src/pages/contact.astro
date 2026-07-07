@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, encodeMail } from '../lib/site';
+
+const s = await getSettings();
+const hasForm = s.formAction.trim().length > 0;
+const mail = encodeMail(s.email, 'Website enquiry');
+---
+<Base title={`Contact — ${s.name}`} description="Tell us about your place. Honest advice on whether a website will help, what it costs, and how fast it can be live." nav="contact" page="contact.html">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Contact</p>
+        <h2>Tell us about your place.</h2>
+        <p>A café, a band, a shop, a plan on the back of a napkin — whatever it is, drop a line and you'll get a real reply from a real person.</p>
+      </div>
+
+      <div class="contact-grid">
+        {hasForm ? (
+          <form class="contact-form" method="POST" action={s.formAction}>
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="about">About the project</label>
+              <textarea id="about" name="message" required placeholder="What's the place? What do you need it to do?"></textarea>
+            </div>
+            <!-- honeypot: bots fill this, people don't -->
+            <div class="hp" aria-hidden="true">
+              <label>Leave this empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <button class="btn btn-primary" type="submit">Send it over</button>
+          </form>
+        ) : (
+          <div>
+            <p class="lead">The contact form isn't wired up yet — but email works perfectly, and it comes straight to a person.</p>
+            <p><a class="btn btn-primary" href={`mailto:${s.email}?subject=Website%20enquiry`} set:html={`Email us &nbsp;→`}></a></p>
+            <p style="margin-top:.8rem">Or copy it down: <a href={`mailto:${s.email}`} set:html={mail.label}></a></p>
+          </div>
+        )}
+
+        <aside class="contact-aside">
+          <p class="big">What happens next</p>
+          <p>You'll hear back within a day or two — usually the same day. We'll ask a few questions, have a proper look at your place, and tell you honestly whether a site will help and roughly what it'd cost.</p>
+          <p>No hard sell, no jargon, no call-booking funnel. If the honest answer is "you don't need this yet", that's the answer you'll get.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</Base>

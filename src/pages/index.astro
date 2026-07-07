@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, getHome, getWork, markHeading, u } from '../lib/site';
+
+const s = await getSettings();
+const home = await getHome();
+const work = await getWork();
+const featured = work.filter((w) => w.data.featured).slice(0, 2);
+const teasers = featured.length ? featured : work.slice(0, 2);
+---
+<Base title={`${s.name} — ${s.strapline}`} description={s.description} nav="home" page="index.html">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">{home.hero.eyebrow}</p>
+        <h1 set:html={markHeading(home.hero.heading)}></h1>
+        <p class="sub">{home.hero.sub}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
+          <a class="btn btn-ghost" href={u('work.html')}>See the work</a>
+        </div>
+      </div>
+      <div class="hero-stage" data-viaduct>
+        <!-- Static fallback (JS off / reduced motion). Replaced by the canvas
+             island once it loads; the CSS gradient stands in until then. -->
+        {home.hero.note && <p class="hero-note">{home.hero.note}</p>}
+      </div>
+    </div>
+  </section>
+
+  <div class="colonnade into-alt" aria-hidden="true"></div>
+
+  <!-- PILLARS -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="pillars">
+        {home.pillars.map((p) => (
+          <article class="pillar">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK TEASERS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Recent work</p>
+        <h2>Two places, one engine — and they couldn't look less alike.</h2>
+        <p>A coffee shop and a band, both fast, both self-editable. Have a proper look.</p>
+      </div>
+      <div class="work-grid">
+        {teasers.map((w) => (
+          <a class="case" href={u(`work/${w.id}.html`)}>
+            <div class="case-shot">
+              {w.data.image
+                ? <img src={u(w.data.image)} alt={`${w.data.client} website`} loading="lazy" width="800" height="550" />
+                : <div class="placeholder">{w.data.client}</div>}
+            </div>
+            <div class="case-body">
+              <p class="case-meta">{w.data.sector} · {w.data.year}</p>
+              <h3>{w.data.title}</h3>
+              <p>{w.data.summary}</p>
+              <p class="more">Read the case study →</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="center mt-2"><a class="btn btn-ghost" href={u('work.html')}>All work</a></p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="cta">
+        <h2>{home.cta.heading}</h2>
+        <p>{home.cta.body}</p>
+        <a class="btn btn-primary" href={u('contact.html')}>Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
