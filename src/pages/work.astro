@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, getWork, u } from '../lib/site';
+
+const s = await getSettings();
+const work = await getWork();
+---
+<Base title={`Work — ${s.name}`} description="Case studies: fast, handmade, self-editable websites for small businesses around Manchester." nav="work" page="work.html">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Case studies</p>
+        <h2>Sites built to carry — and handed back to their owners.</h2>
+        <p>Each one is a real, live site the owner updates themselves. Here's how they came together.</p>
+      </div>
+      <div class="work-grid">
+        {work.map((w) => (
+          <a class="case" href={u(`work/${w.id}.html`)}>
+            <div class="case-shot">
+              {w.data.image
+                ? <img src={u(w.data.image)} alt={`${w.data.client} website`} loading="lazy" width="800" height="550" />
+                : <div class="placeholder">{w.data.client}</div>}
+            </div>
+            <div class="case-body">
+              <p class="case-meta">{w.data.sector} · {w.data.year}</p>
+              <h3>{w.data.title}</h3>
+              <p>{w.data.summary}</p>
+              <p class="more">Read the case study →</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

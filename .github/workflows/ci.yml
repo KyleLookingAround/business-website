@@ -1,0 +1,19 @@
+name: Build check
+
+# Runs the build on every pull request, so a YAML typo or schema error in
+# content/ gets caught before it merges to main and takes the site down.
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build

@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSettings, getServices, u } from '../lib/site';
+
+const s = await getSettings();
+const svc = await getServices();
+---
+<Base title={`Services — ${s.name}`} description="Three ways to work with Viaduct Studios — plainly described, plainly priced. Every site is handmade, fast, and yours to edit." nav="services" page="services.html">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Services</p>
+        <h2>Three spans to choose from.</h2>
+        <p>{svc.intro}</p>
+      </div>
+
+      <div class="packages">
+        {svc.packages.map((p) => (
+          <article class="pkg">
+            <span class="kind">{p.kind}</span>
+            <h3>{p.name}</h3>
+            <p class="price">{p.price}</p>
+            <p class="blurb">{p.blurb}</p>
+            <ul>
+              {p.includes.map((it) => <li>{it}</li>)}
+            </ul>
+            <a class="btn btn-ghost btn-block" href={u('contact.html')}>Enquire</a>
+          </article>
+        ))}
+      </div>
+
+      {svc.note && <p class="note">{svc.note}</p>}
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Not sure which one?</h2>
+        <p>Tell us about the place. We'll point you at the right span — or tell you honestly if you don't need one yet.</p>
+        <a class="btn btn-primary" href={u('contact.html')}>Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,124 @@
+# Sveltia CMS configuration — maps Viaduct Studios' content to edit forms.
+# Docs: https://github.com/sveltia/sveltia-cms
+backend:
+  name: github
+  repo: KyleLookingAround/business-website
+  branch: main
+
+media_folder: public/assets   # where uploaded images land in the repo
+public_folder: /assets        # how the content files refer to them
+
+site_url: https://kylelookingaround.github.io/business-website/
+display_url: https://kylelookingaround.github.io/business-website/
+
+collections:
+  - name: site
+    label: The Site
+    files:
+
+      - name: settings
+        label: "Settings (name, contact, links)"
+        file: content/settings.yml
+        fields:
+          - { name: url, label: "Site address", hint: "Only change when moving to a custom domain (and add a public/CNAME file).", widget: string }
+          - { name: name, label: "Studio name", widget: string }
+          - { name: strapline, label: "Strapline (footer + titles)", widget: string }
+          - { name: description, label: "One-line description (search results & link previews)", widget: text }
+          - { name: area, label: "Area served (e.g. Stockport · Manchester)", widget: string }
+          - { name: locality, label: "Town", widget: string }
+          - { name: region, label: "Region", widget: string }
+          - { name: email, label: "Contact email", widget: string }
+          - { name: formAction, label: "Contact form URL", hint: "Paste a Formspree endpoint to switch the contact page to a real form. Blank = email button.", widget: string, required: false, default: "" }
+          - name: links
+            label: "Links (blank = hidden)"
+            widget: object
+            fields:
+              - { name: github, label: "GitHub URL", widget: string, required: false, default: "" }
+              - { name: linkedin, label: "LinkedIn URL", widget: string, required: false, default: "" }
+
+      - name: home
+        label: "Home page"
+        file: content/home.yml
+        fields:
+          - name: hero
+            label: "Hero"
+            widget: object
+            fields:
+              - { name: eyebrow, label: "Eyebrow line", widget: string }
+              - { name: heading, label: "Headline", hint: "Wrap one word in *asterisks* for the green underline.", widget: string }
+              - { name: sub, label: "Sub-heading", widget: text }
+              - { name: note, label: "Caption on the viaduct", widget: string, required: false, default: "" }
+          - name: pillars
+            label: "The three pillars"
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - { name: title, label: "Title", widget: string }
+              - { name: body, label: "Text", widget: text }
+          - name: cta
+            label: "Call-to-action (after case studies)"
+            widget: object
+            fields:
+              - { name: heading, label: "Heading", widget: string }
+              - { name: body, label: "Text", widget: text }
+
+      - name: services
+        label: "Services page"
+        file: content/services.yml
+        fields:
+          - { name: intro, label: "Intro", widget: text }
+          - name: packages
+            label: "Packages"
+            widget: list
+            fields:
+              - { name: name, label: "Name", widget: string }
+              - { name: kind, label: "Kind (small label)", widget: string }
+              - { name: price, label: "Price", widget: string }
+              - { name: blurb, label: "Blurb", widget: text }
+              - name: includes
+                label: "What's included"
+                widget: list
+                field: { name: item, label: "Item", widget: string }
+          - { name: note, label: "Note under the packages", widget: text, required: false, default: "" }
+
+      - name: about
+        label: "About page"
+        file: content/about.yml
+        fields:
+          - { name: lede, label: "Opening line", widget: text }
+          - name: paragraphs
+            label: "Paragraphs"
+            widget: list
+            field: { name: paragraph, label: "Paragraph", widget: text }
+          - name: values
+            label: "Values"
+            widget: list
+            fields:
+              - { name: title, label: "Title", widget: string }
+              - { name: body, label: "Text", widget: text }
+
+  - name: work
+    label: "Case studies"
+    label_singular: "Case study"
+    folder: content/work
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{title}} — {{sector}}"
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: slug, label: "URL slug", hint: "Lowercase, dashes. This is the page's web address, e.g. 'rannys'.", widget: string }
+      - { name: client, label: "Client", widget: string }
+      - { name: sector, label: "Sector · place", widget: string }
+      - { name: year, label: "Year", widget: string }
+      - { name: url, label: "Live site URL", widget: string }
+      - { name: image, label: "Cover image (16:11)", widget: image, required: false }
+      - { name: order, label: "Sort order (low = first)", widget: number, default: 999, value_type: int }
+      - { name: featured, label: "Feature on the home page?", widget: boolean, default: false }
+      - { name: summary, label: "One-line summary", widget: text }
+      - { name: stack, label: "Built with (sidebar)", widget: string, required: false, default: "" }
+      - { name: testimonial, label: "Testimonial quote", widget: text, required: false, default: "" }
+      - { name: testimonialBy, label: "Testimonial — who said it", widget: string, required: false, default: "" }
+      - { name: body, label: "The story", widget: markdown }

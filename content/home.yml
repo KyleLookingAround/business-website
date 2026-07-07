@@ -1,0 +1,24 @@
+# ════════════════════════════════════════════════════════════════════
+#  VIADUCT STUDIOS · home page
+# ════════════════════════════════════════════════════════════════════
+
+hero:
+  eyebrow: "A small web studio in Stockport"
+  # The headline; the word in *asterisks* gets the signal-green underline.
+  heading: "Websites built like the *viaduct* — to carry, and to last."
+  sub: "Fast, handmade sites for cafés, bands and local businesses around Manchester. No page builders, no monthly ransom — and you can update every word yourself."
+  note: "☝ this viaduct is built fresh every day — tap it to lay another"
+
+# ── The three pillars ────────────────────────────────────────────────
+pillars:
+  - title: "Fast"
+    body: "Hand-built pages with nothing wasted — they load in a blink on a phone outside your shop, and Google notices that too."
+  - title: "Handmade"
+    body: "No templates off the shelf. Your site looks like your place — down to the paint colours and the handwriting on the chalkboard."
+  - title: "Yours to update"
+    body: "Change the menu, add a gig, swap a photo — from your phone, no developer needed. If an edit ever goes wrong, the live site stays up."
+
+# ── The bit after the case studies ──────────────────────────────────
+cta:
+  heading: "Got a place, a band, a thing?"
+  body: "Tell us about it. We'll tell you honestly whether a website will help, what it would cost, and how quickly it can be live."
