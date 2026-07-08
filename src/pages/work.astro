@@ -1,23 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getSettings, getWork, u } from '../lib/site';
+import Milepost from '../components/Milepost.astro';
 
 const s = await getSettings();
 const work = await getWork();
 ---
 <Base title={`Work — ${s.name}`} description="Case studies: fast, handmade, self-editable websites for small businesses around Manchester." nav="work" page="work.html">
 
-  <section class="section">
+  <section class="page-head">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Case studies</p>
-        <h2>Sites built to carry — and handed back to their owners.</h2>
-        <p>Each one is a real, live site the owner updates themselves. Here's how they came together.</p>
-      </div>
-      <div class="work-grid">
-        {work.map((w) => (
+      <Milepost n={1} label="Case studies" />
+      <h1>The spans so far.</h1>
+      <p class="lede">Each arch is a real, live site the owner updates themselves — walk along and have a look at how they came together.</p>
+    </div>
+  </section>
+
+  <!-- The elevation drawing: one continuous deck, an arch per project -->
+  <section class="section" style="padding-top:1.6rem">
+    <div class="wrap elevation">
+      <div class="deck-line" aria-hidden="true"></div>
+      <div class="spans">
+        {work.map((w, i) => (
           <a class="case" href={u(`work/${w.id}.html`)}>
             <div class="case-shot">
+              <span class="case-no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               {w.data.image
                 ? <img src={u(w.data.image)} alt={`${w.data.client} website`} loading="lazy" width="800" height="550" />
                 : <div class="placeholder">{w.data.client}</div>}
@@ -30,6 +37,16 @@ const work = await getWork();
             </div>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt reveal">
+    <div class="wrap">
+      <div class="cta">
+        <h2>The next arch could be yours.</h2>
+        <p>Tell us about your place. We'll be honest about whether a site will help and what it would cost.</p>
+        <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
       </div>
     </div>
   </section>

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { getSettings, getHome, getWork, markHeading, u } from '../lib/site';
 import Steps from '../components/Steps.astro';
+import Milepost from '../components/Milepost.astro';
 
 const s = await getSettings();
 const home = await getHome();
@@ -9,49 +10,25 @@ const work = await getWork();
 const featured = work.filter((w) => w.data.featured).slice(0, 2);
 const teasers = featured.length ? featured : work.slice(0, 2);
 ---
-<Base title={`${s.name} — ${s.strapline}`} description={s.description} nav="home" page="index.html">
+<Base title={`${s.name} — ${s.strapline}`} description={s.description} nav="home" page="index.html" masthead="hero">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="eyebrow">{home.hero.eyebrow}</p>
-        <h1 set:html={markHeading(home.hero.heading)}></h1>
-        <p class="sub">{home.hero.sub}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
-          <a class="btn btn-ghost" href={u('work.html')}>See the work</a>
-        </div>
-      </div>
-      <div class="hero-stage" data-viaduct>
-        <!-- Static fallback (JS off / reduced motion). Replaced by the canvas
-             island once it loads; the CSS gradient stands in until then. -->
-        {home.hero.note && <p class="hero-note">{home.hero.note}</p>}
-      </div>
+  <!-- HERO — headline on the sky, the viaduct assembling beneath it -->
+  <Fragment slot="masthead">
+    <p class="milepost"><span class="mp">MP 0</span> {home.hero.eyebrow}</p>
+    <h1 set:html={markHeading(home.hero.heading)}></h1>
+    <p class="sub">{home.hero.sub}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={u('contact.html')}>Start a project</a>
+      <a class="btn btn-ghost" href={u('work.html')}>See the work</a>
     </div>
-  </section>
+  </Fragment>
+  {home.hero.note && <p class="mast-note" slot="masthead-note">{home.hero.note}</p>}
 
-  <div class="colonnade into-alt" aria-hidden="true"></div>
-
-  <!-- PILLARS -->
-  <section class="section alt">
-    <div class="wrap">
-      <div class="pillars">
-        {home.pillars.map((p) => (
-          <article class="pillar">
-            <h3>{p.title}</h3>
-            <p>{p.body}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK TEASERS -->
-  <section class="section">
+  <!-- MP 1 · RECENT WORK -->
+  <section class="section reveal">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Recent work</p>
+        <Milepost n={1} label="Recent work" />
         <h2>Two places, one engine — and they couldn't look less alike.</h2>
         <p>A coffee shop and a band, both fast, both self-editable. Have a proper look.</p>
       </div>
@@ -72,29 +49,45 @@ const teasers = featured.length ? featured : work.slice(0, 2);
           </a>
         ))}
       </div>
-      <p class="center mt-2"><a class="btn btn-ghost" href={u('work.html')}>All work</a></p>
+      <p class="center mt-2"><a class="btn btn-ghost" href={u('work.html')}>Walk the full span</a></p>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <div class="colonnade into-alt" aria-hidden="true"></div>
+
+  <!-- MP 2 · WHAT YOU GET -->
+  <section class="section alt reveal">
+    <div class="wrap">
+      <div class="section-head">
+        <Milepost n={2} label="What you get" />
+      </div>
+      <div class="pillars">
+        {home.pillars.map((p) => (
+          <article class="pillar">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MP 3 · HOW IT WORKS -->
   {home.process.length > 0 && (
-    <>
-      <div class="colonnade into-alt" aria-hidden="true"></div>
-      <section class="section alt">
-        <div class="wrap">
-          <div class="section-head">
-            <p class="eyebrow">How it works</p>
-            <h2>Three steps, no mystery.</h2>
-            <p>From first message to the keys in your hand — here's how a Viaduct site comes together.</p>
-          </div>
-          <Steps steps={home.process} />
+    <section class="section reveal">
+      <div class="wrap">
+        <div class="section-head">
+          <Milepost n={3} label="How it works" />
+          <h2>Three steps, no mystery.</h2>
+          <p>From first message to the keys in your hand — here's how a Viaduct site comes together.</p>
         </div>
-      </section>
-    </>
+        <Steps steps={home.process} />
+      </div>
+    </section>
   )}
 
-  <!-- CTA -->
-  <section class="section">
+  <!-- ARRIVAL · CTA -->
+  <section class="section alt reveal">
     <div class="wrap">
       <div class="cta">
         <h2>{home.cta.heading}</h2>

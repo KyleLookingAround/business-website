@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { getSettings, getHome, encodeMail } from '../lib/site';
 import Steps from '../components/Steps.astro';
+import Milepost from '../components/Milepost.astro';
 
 const s = await getSettings();
 const home = await getHome();
@@ -10,10 +11,10 @@ const mail = encodeMail(s.email, 'Website enquiry');
 ---
 <Base title={`Contact — ${s.name}`} description="Tell us about your place. Honest advice on whether a website will help, what it costs, and how fast it can be live." nav="contact" page="contact.html">
 
-  <section class="section">
+  <section class="section" style="padding-top:clamp(2rem,5vw,3.2rem)">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Contact</p>
+        <Milepost n={1} label="Contact" />
         <h2>Tell us about your place.</h2>
         <p>A café, a band, a shop, a plan on the back of a napkin — whatever it is, drop a line and you'll get a real reply from a real person.</p>
         {s.availability && <p class="availability">{s.availability}</p>}
@@ -60,10 +61,10 @@ const mail = encodeMail(s.email, 'Website enquiry');
   {home.process.length > 0 && (
     <>
       <div class="colonnade into-alt" aria-hidden="true"></div>
-      <section class="section alt">
+      <section class="section alt reveal">
         <div class="wrap">
           <div class="section-head">
-            <p class="eyebrow">How it works</p>
+            <Milepost n={2} label="How it works" />
             <h2>What happens after you send that email.</h2>
           </div>
           <Steps steps={home.process} />

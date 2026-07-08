@@ -1,9 +1,12 @@
 ---
 /**
- * Viaduct Studios — shared shell: head (meta/OG/JSON-LD), sticky top bar
- * with the arched wordmark, burger nav, colonnade footer. Every page renders
- * inside this.
+ * Viaduct Studios — shared shell, "Full Span" system.
+ * Every page carries a slice of the same day's generative viaduct: the home
+ * page mounts the tall hero masthead (headline on the sky, named slot
+ * "masthead"), inner pages a slim parapet strip. View transitions keep the
+ * structure continuous between pages; a signal rail tracks scroll progress.
  */
+import { ClientRouter } from 'astro:transitions';
 import { getSettings, ogImage, jsonLd, encodeMail, NAV, u } from '../lib/site';
 
 interface Props {
@@ -15,15 +18,16 @@ interface Props {
   page?: string;
   /** absolute-ish path to a per-page share image, e.g. "/assets/og-work.png" */
   ogPath?: string;
+  /** masthead size: the home page passes 'hero', everything else defaults */
+  masthead?: 'hero' | 'strip';
 }
 
-const { title, description, nav = '', page = '', ogPath } = Astro.props;
+const { title, description, nav = '', page = '', ogPath, masthead = 'strip' } = Astro.props;
 const s = await getSettings();
 const pageUrl = s.url.replace(/\/?$/, '/') + (page === 'index.html' ? '' : page);
 const year = new Date().getFullYear();
 const mail = encodeMail(s.email);
 const current = (n: string) => (nav === n ? 'page' : undefined);
-const wordmark = (extra = '') => `<span class="wordmark ${extra}">`;
 ---
 
 <!doctype html>
@@ -59,12 +63,13 @@ const wordmark = (extra = '') => `<span class="wordmark ${extra}">`;
 <link rel="stylesheet" href={u('styles.css')}>
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd(s)).replace(/</g, '\\u003c')} />
+<ClientRouter />
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <!-- TOP BAR -->
-<header class="topbar">
+<header class="topbar" transition:name="topbar">
   <div class="wrap topbar-in">
     <a class="wordmark" href={u('')} aria-label={`${s.name} — home`}>
       <b>Viaduct <em>Studios</em></b>
@@ -81,6 +86,18 @@ const wordmark = (extra = '') => `<span class="wordmark ${extra}">`;
     </nav>
   </div>
 </header>
+
+<!-- THE MASTHEAD — the viaduct itself -->
+<div class={`masthead masthead-${masthead}`} data-masthead={masthead} transition:name="masthead">
+  {masthead === 'hero' && (
+    <div class="wrap" style="position:relative; z-index:2">
+      <div class="mast-content">
+        <slot name="masthead" />
+      </div>
+      <slot name="masthead-note" />
+    </div>
+  )}
+</div>
 
 <main id="main">
 <slot />
@@ -107,6 +124,9 @@ const wordmark = (extra = '') => `<span class="wordmark ${extra}">`;
     </div>
   </div>
 </footer>
+
+<!-- Signal rail: scroll progress (CSS scroll-driven; absent otherwise) -->
+<div class="rail" aria-hidden="true"><div class="rail-fill"></div></div>
 
 <script src="../scripts/app.ts"></script>
 </body>
