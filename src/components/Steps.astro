@@ -1,0 +1,16 @@
+---
+/** The "how it works" numbered steps — shared by home and contact. */
+interface Props { steps: { title: string; body: string }[] }
+const { steps } = Astro.props;
+---
+<ol class="steps">
+  {steps.map((st, i) => (
+    <li class="step">
+      <span class="step-n" aria-hidden="true">{i + 1}</span>
+      <div class="step-body">
+        <h3>{st.title}</h3>
+        <p>{st.body}</p>
+      </div>
+    </li>
+  ))}
+</ol>

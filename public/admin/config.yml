@@ -29,6 +29,7 @@ collections:
           - { name: region, label: "Region", widget: string }
           - { name: email, label: "Contact email", widget: string }
           - { name: formAction, label: "Contact form URL", hint: "Paste a Formspree endpoint to switch the contact page to a real form. Blank = email button.", widget: string, required: false, default: "" }
+          - { name: availability, label: "Availability line (optional)", hint: "A short honest note shown near the contact call-to-action, e.g. 'Taking on a couple of projects this autumn'. Blank = hidden.", widget: string, required: false, default: "" }
           - name: links
             label: "Links (blank = hidden)"
             widget: object
@@ -56,6 +57,12 @@ collections:
             fields:
               - { name: title, label: "Title", widget: string }
               - { name: body, label: "Text", widget: text }
+          - name: process
+            label: "How it works (steps)"
+            widget: list
+            fields:
+              - { name: title, label: "Step title", widget: string }
+              - { name: body, label: "Text", widget: text }
           - name: cta
             label: "Call-to-action (after case studies)"
             widget: object
@@ -74,7 +81,6 @@ collections:
             fields:
               - { name: name, label: "Name", widget: string }
               - { name: kind, label: "Kind (small label)", widget: string }
-              - { name: price, label: "Price", widget: string }
               - { name: blurb, label: "Blurb", widget: text }
               - name: includes
                 label: "What's included"
@@ -91,12 +97,28 @@ collections:
             label: "Paragraphs"
             widget: list
             field: { name: paragraph, label: "Paragraph", widget: text }
+          - { name: portrait, label: "Portrait photo (optional)", hint: "A photo of you for the panel beside the story. Leave empty for the brick panel.", widget: image, required: false }
+          - name: facts
+            label: "The short version (facts beside the story)"
+            widget: list
+            field: { name: fact, label: "Fact", widget: string }
           - name: values
             label: "Values"
             widget: list
             fields:
               - { name: title, label: "Title", widget: string }
               - { name: body, label: "Text", widget: text }
+
+      - name: faq
+        label: "FAQ (Services page)"
+        file: content/faq.yml
+        fields:
+          - name: items
+            label: "Questions"
+            widget: list
+            fields:
+              - { name: q, label: "Question", widget: string }
+              - { name: a, label: "Answer", widget: text }
 
   - name: work
     label: "Case studies"
@@ -119,6 +141,11 @@ collections:
       - { name: featured, label: "Feature on the home page?", widget: boolean, default: false }
       - { name: summary, label: "One-line summary", widget: text }
       - { name: stack, label: "Built with (sidebar)", widget: string, required: false, default: "" }
+      - name: results
+        label: "Results (sidebar bullet points)"
+        widget: list
+        required: false
+        field: { name: result, label: "Result", widget: string }
       - { name: testimonial, label: "Testimonial quote", widget: text, required: false, default: "" }
       - { name: testimonialBy, label: "Testimonial — who said it", widget: string, required: false, default: "" }
       - { name: body, label: "The story", widget: markdown }

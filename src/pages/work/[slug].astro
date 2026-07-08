@@ -50,9 +50,26 @@ const { Content } = await render(entry);
             <dt>Year</dt><dd>{d.year}</dd>
             {d.stack && (<><dt>Built with</dt><dd>{d.stack}</dd></>)}
           </dl>
+
+          {d.results.length > 0 && (
+            <div class="case-results">
+              <p class="case-results-h">Results</p>
+              <ul>{d.results.map((r) => <li>{r}</li>)}</ul>
+            </div>
+          )}
+
           <p style="margin-top:1.2rem">
             <a class="btn btn-primary btn-block" href={d.url} target="_blank" rel="noopener">Visit the live site ↗</a>
           </p>
+
+          {d.testimonial && (
+            <blockquote class="case-quote">
+              {d.testimonial}
+              {d.testimonialBy && <cite>— {d.testimonialBy}</cite>}
+            </blockquote>
+          )}
+
+          <p class="case-more"><a href={u('work.html')}>← More work</a></p>
         </aside>
       </div>
     </section>

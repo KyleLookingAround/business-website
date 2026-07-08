@@ -18,6 +18,15 @@ pillars:
   - title: "Yours to update"
     body: "Change the menu, add a gig, swap a photo — from your phone, no developer needed. If an edit ever goes wrong, the live site stays up."
 
+# ── How it works — three steps ──────────────────────────────────────
+process:
+  - title: "Have a chat"
+    body: "Tell us about your place. We'll be honest about whether a site will help, what it'd cost, and how soon it can be live — no jargon, no call-booking funnel."
+  - title: "We build it"
+    body: "A handmade site designed around your place — your photos, your words, your colours. You see it come together and we get it exactly right before it goes live."
+  - title: "You get the keys"
+    body: "The site and the domain are yours, in your name. You edit it from your phone through a simple editor — and we're here when you'd rather we handled it."
+
 # ── The bit after the case studies ──────────────────────────────────
 cta:
   heading: "Got a place, a band, a thing?"

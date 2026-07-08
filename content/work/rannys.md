@@ -9,6 +9,11 @@ order: 1
 featured: true
 summary: "A new coffee shop with no website and no time — now running a warm, fast, six-page site the owner edits from her phone."
 stack: "Astro · schema-checked YAML content · Sveltia CMS · GitHub Pages · a lazy-loaded three.js flourish"
+results:
+  - "Live 'open now / closed', accurate to Stockport time"
+  - "Owner publishes menu, events & photos from her phone"
+  - "Loads in a blink on a phone outside the shop"
+  - "A broken edit can never take the site down"
 testimonial: ""
 testimonialBy: ""
 ---
@@ -53,14 +58,8 @@ a Save button. If an edit is ever broken, the build catches it, the live
 site stays exactly as it was, and she gets a friendly email instead of a
 broken homepage.
 
-*(Screen recording of the editor in action — coming soon.)*
-
 ## Live proof
 
 The real site is at [kylelookingaround.github.io/rannys](https://kylelookingaround.github.io/rannys/) —
 go and spin the mug. Have a look on your phone, on bad signal, in the
 street. That's the test that matters.
-
-## In her words
-
-> *(Testimonial from the owner — coming soon.)*

@@ -39,6 +39,24 @@ export async function getAbout() {
   return entry.data;
 }
 
+export async function getFaq() {
+  const entry = await getEntry('faq', 'main');
+  return entry?.data.items ?? [];
+}
+
+/** FAQPage structured data (Google FAQ rich results). */
+export function faqJsonLd(items: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.q,
+      acceptedAnswer: { '@type': 'Answer', text: it.a },
+    })),
+  };
+}
+
 /** Case studies, ordered (lowest `order` first, then by title). */
 export async function getWork() {
   const items = await getCollection('work');

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getSettings, getHome, getWork, markHeading, u } from '../lib/site';
+import Steps from '../components/Steps.astro';
 
 const s = await getSettings();
 const home = await getHome();
@@ -75,8 +76,25 @@ const teasers = featured.length ? featured : work.slice(0, 2);
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
+  {home.process.length > 0 && (
+    <>
+      <div class="colonnade into-alt" aria-hidden="true"></div>
+      <section class="section alt">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">How it works</p>
+            <h2>Three steps, no mystery.</h2>
+            <p>From first message to the keys in your hand — here's how a Viaduct site comes together.</p>
+          </div>
+          <Steps steps={home.process} />
+        </div>
+      </section>
+    </>
+  )}
+
   <!-- CTA -->
-  <section class="section alt">
+  <section class="section">
     <div class="wrap">
       <div class="cta">
         <h2>{home.cta.heading}</h2>

@@ -9,6 +9,11 @@ order: 2
 featured: true
 summary: "A midwest-emo four-piece with shows to sell and lyrics fans kept asking for — now broadcasting from a grain-soaked site the band updates between rehearsals."
 stack: "Astro · YAML + markdown content · Sveltia CMS · GitHub Pages · custom domain"
+results:
+  - "Every gig is a real page search engines can read"
+  - "Shows sort themselves into upcoming & archive by date"
+  - "Band edits dates, setlists & lyrics themselves"
+  - "Old shared links still work via a redirect shim"
 testimonial: ""
 testimonialBy: ""
 ---
@@ -49,14 +54,8 @@ link, done. The site sorts it into the right page, marks it "aired" after
 the night, and keeps the archive honest. Lyrics, photos and merch work the
 same way. Nobody in the band has touched a line of code.
 
-*(Screen recording of adding a show — coming soon.)*
-
 ## Live proof
 
 The real site is at [hospitalradiofullstop.co.uk](https://hospitalradiofullstop.co.uk/) —
 tap "Tune In" at the bottom. Two sites from the same engine, and they
 couldn't look less alike. That contrast is the point.
-
-## In their words
-
-> *(Testimonial from the band — coming soon.)*

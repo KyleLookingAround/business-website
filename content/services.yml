@@ -1,17 +1,15 @@
 # ════════════════════════════════════════════════════════════════════
 #  VIADUCT STUDIOS · services page
 #
-#  NOTE: prices are placeholders ("from £—") until real numbers are
-#  settled — publish them as soon as they exist; "contact for pricing"
-#  filters out exactly the small clients we want.
+#  No prices here on purpose — every project is quoted individually. The
+#  packages describe *ways to work*; the number comes after a quick chat.
 # ════════════════════════════════════════════════════════════════════
 
-intro: "Three ways to work with us — plainly described, plainly priced. Every site is handmade, loads fast, and comes with an editor so you can change your own words and photos. No lock-in: the site and the domain are yours."
+intro: "Three ways to work with us — plainly described. Every site is handmade, loads fast, and comes with an editor so you can change your own words and photos. No lock-in: the site and the domain are yours."
 
 packages:
   - name: "The Arch"
     kind: "A single-page site"
-    price: "from £—"
     blurb: "One beautiful page that says who you are, where you are, and when you're open. Perfect for getting on the map properly."
     includes:
       - "One handmade page, designed around your place"
@@ -20,7 +18,6 @@ packages:
       - "Live in about a week"
   - name: "The Span"
     kind: "The full site, self-editable"
-    price: "from £—"
     blurb: "A proper multi-page site with an editor behind it — menus, gigs, photos, whatever changes in your world, you change yourself."
     includes:
       - "Up to six pages, designed around your business"
@@ -30,7 +27,6 @@ packages:
       - "Something distinctive nobody else has — ask about the 3D mug"
   - name: "The Keystone"
     kind: "Care plan · monthly"
-    price: "£— / month"
     blurb: "We keep the site fast, secure and current — and handle the small changes you'd rather not do yourself. Cancel any time; the site stays yours."
     includes:
       - "Hosting, domain renewals and updates handled"
@@ -38,4 +34,4 @@ packages:
       - "A yearly refresh conversation — keep it feeling current"
       - "Straight answers when you're deciding what's next"
 
-note: "Honest answers on what things actually cost — hosting, domains, our time — are coming as their own page. In the meantime: ask, and you'll get a real number, not a call booking link."
+note: "No price list — every job is different, so every job is quoted for what it actually is. Tell us about your place and you'll get a real number and an honest steer, not a call-booking link."
