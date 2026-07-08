@@ -1,0 +1,6 @@
+---
+/** Milepost section marker — the site's wayfinding language. */
+interface Props { n: number | string; label: string }
+const { n, label } = Astro.props;
+---
+<p class="milepost"><span class="mp">MP {n}</span> {label}</p>

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getSettings, getServices, getFaq, faqJsonLd, u } from '../lib/site';
+import Milepost from '../components/Milepost.astro';
 
 const s = await getSettings();
 const svc = await getServices();
@@ -8,13 +9,16 @@ const faq = await getFaq();
 ---
 <Base title={`Services — ${s.name}`} description="Three ways to work with Viaduct Studios — handmade, fast, and yours to edit. Every project quoted individually." nav="services" page="services.html">
 
-  <section class="section">
+  <section class="page-head">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Services</p>
-        <h2>Three spans to choose from.</h2>
-        <p>{svc.intro}</p>
-      </div>
+      <Milepost n={1} label="Services" />
+      <h1>Three spans to choose from.</h1>
+      <p class="lede">{svc.intro}</p>
+    </div>
+  </section>
+
+  <section class="section reveal" style="padding-top:2rem">
+    <div class="wrap">
 
       <div class="packages">
         {svc.packages.map((p) => (
@@ -35,10 +39,10 @@ const faq = await getFaq();
   </section>
 
   {faq.length > 0 && (
-    <section class="section alt">
+    <section class="section alt reveal">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Questions</p>
+          <Milepost n={2} label="Questions" />
           <h2>The things people ask.</h2>
         </div>
         <div class="faq">

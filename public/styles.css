@@ -1,8 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════════
-   VIADUCT STUDIOS — stylesheet
+   VIADUCT STUDIOS — stylesheet, "Full Span" system
    Design tokens live in :root (see BRANDING.md). One file, no build step.
-   Identity: Stockport viaduct — red brick, limestone sky, soot ink,
-   one signal-green accent. The arch is the recurring motif.
+
+   The viaduct is the site's chrome: a generative masthead spans every
+   page (tall on home, a parapet strip inside), the sky follows the local
+   hour and tints the tokens, sections are mileposts along the route, and
+   a signal rail tracks your progress. Light by default; a true night
+   scheme under prefers-color-scheme: dark.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Self-hosted fonts (latin) ─────────────────────────────────────── */
@@ -34,6 +38,8 @@
 
 /* ── Design tokens ─────────────────────────────────────────────────── */
 :root {
+  color-scheme: light;
+
   /* Brick — a small varied family, as real masonry is */
   --brick:        #9e4a37;
   --brick-deep:   #6f3227;
@@ -41,9 +47,9 @@
   --brick-pale:   #c8836b;
 
   /* Limestone / sky — the pale ground */
-  --paper:        #f4efe6;   /* page */
-  --limestone:    #ece4d6;   /* raised surfaces */
-  --mortar:       #ddd2be;   /* hairlines, mortar lines */
+  --paper:        #f4efe6;
+  --limestone:    #ece4d6;
+  --mortar:       #ddd2be;
 
   /* Soot — the ink */
   --ink:          #241f1c;
@@ -54,6 +60,13 @@
   --signal:       #0f7a52;
   --signal-deep:  #0a5a3c;
   --signal-glow:  #16a06c;
+  --link:         var(--signal-deep);
+  --link-hover:   var(--signal);
+
+  /* The sky — set by the masthead as the hour changes (JS refines these) */
+  --sky-top:      #bcd4e4;
+  --sky-bottom:   #eee5d2;
+  --mast-ink:     var(--ink);
 
   /* Type */
   --display: 'Bricolage Grotesque', system-ui, sans-serif;
@@ -63,11 +76,33 @@
   /* Structure */
   --wrap: 74rem;
   --gap: clamp(1.25rem, 4vw, 2.5rem);
-  --radius: 14px;         /* general soft corner */
-  --arch: 999px;          /* arch-top radius */
+  --radius: 14px;
+  --arch: 999px;
 
   --shadow: 0 1px 2px rgba(36,31,28,.06), 0 8px 28px -12px rgba(36,31,28,.22);
   --shadow-lift: 0 2px 4px rgba(36,31,28,.08), 0 22px 48px -20px rgba(111,50,39,.34);
+}
+
+/* Night: soot page, lifted brick, glowing signal. The masthead sets
+   --sky-* itself; these are the JS-off/night defaults. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper:      #211c19;
+    --limestone:  #2b2521;
+    --mortar:     #463b33;
+    --ink:        #f0e8db;
+    --ink-soft:   #cbbeb0;
+    --ink-faint:  #97897b;
+    --brick-pale: #d9987f;
+    --link:       #4fd0a0;
+    --link-hover: #7fe3bf;
+    --sky-top:    #1c2337;
+    --sky-bottom: #3c3350;
+    --mast-ink:   #f0e8db;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px -12px rgba(0,0,0,.6);
+    --shadow-lift: 0 2px 4px rgba(0,0,0,.35), 0 22px 48px -20px rgba(0,0,0,.7);
+  }
 }
 
 /* ── Reset & base ──────────────────────────────────────────────────── */
@@ -96,30 +131,20 @@ img { height: auto; }
 h1, h2, h3, h4 {
   font-family: var(--display);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.06;
   letter-spacing: -.02em;
   color: var(--ink);
   margin: 0 0 .5em;
   text-wrap: balance;
 }
 
-a { color: var(--signal-deep); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-a:hover { color: var(--signal); }
+a { color: var(--link); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { color: var(--link-hover); }
 
 p { margin: 0 0 1.1em; }
 :where(p, li) { text-wrap: pretty; }
 
 .wrap { width: min(100% - 2.4rem, var(--wrap)); margin-inline: auto; }
-
-.eyebrow {
-  font-family: var(--mono);
-  font-size: .74rem;
-  font-weight: 600;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--brick);
-  margin: 0 0 .9rem;
-}
 
 /* Skip link */
 .skip {
@@ -131,6 +156,56 @@ p { margin: 0 0 1.1em; }
 .skip:focus { top: .6rem; }
 
 :focus-visible { outline: 3px solid var(--signal-glow); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Mileposts & the signal rail ───────────────────────────────────── */
+.milepost {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: var(--mono); font-size: .74rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--brick); margin: 0 0 1rem;
+}
+.milepost::before {
+  content: ""; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--signal-glow);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 22%, transparent);
+}
+.milepost .mp { color: var(--ink-faint); font-weight: 400; }
+
+/* Progress rail: a signal-green line down the right edge that fills as
+   you travel the page. Scroll-driven CSS only — absent otherwise. */
+.rail { display: none; }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 861px) {
+    .rail {
+      display: block; position: fixed; top: 0; right: 0; z-index: 90;
+      width: 3px; height: 100dvh; background: color-mix(in srgb, var(--mortar) 55%, transparent);
+      pointer-events: none;
+    }
+    .rail-fill {
+      width: 100%; height: 100%; background: var(--signal-glow);
+      transform-origin: top; transform: scaleY(0);
+      animation: rail-fill linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes rail-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  }
+}
+
+/* Scroll reveals — transform-only so content is always readable even if
+   the timeline never advances (older engines, printing, snapshots). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up .01s linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+    @keyframes reveal-up {
+      from { transform: translateY(26px); }
+      to   { transform: none; }
+    }
+  }
+}
 
 /* ── Buttons ───────────────────────────────────────────────────────── */
 .btn {
@@ -144,13 +219,13 @@ p { margin: 0 0 1.1em; }
 .btn-primary { background: var(--signal); color: #fff; box-shadow: 0 8px 20px -10px var(--signal); }
 .btn-primary:hover { background: var(--signal-deep); color: #fff; transform: translateY(-1px); }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--mortar); }
-.btn-ghost:hover { border-color: var(--brick); color: var(--brick-deep); transform: translateY(-1px); }
+.btn-ghost:hover { border-color: var(--brick); color: var(--brick-pale); transform: translateY(-1px); }
 .btn-block { width: 100%; justify-content: center; }
 
 /* ── Top bar ───────────────────────────────────────────────────────── */
 .topbar {
   position: sticky; top: 0; z-index: 100;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter: saturate(1.2) blur(8px);
   border-bottom: 1px solid var(--mortar);
 }
@@ -159,7 +234,6 @@ p { margin: 0 0 1.1em; }
   gap: 1rem; padding: .7rem 0;
 }
 
-/* Wordmark: solid Bricolage, with an arch counter under the name */
 .wordmark {
   display: inline-flex; flex-direction: column; gap: .12rem;
   text-decoration: none; color: var(--ink); line-height: 1;
@@ -187,7 +261,7 @@ p { margin: 0 0 1.1em; }
   padding: .5rem .7rem; border-radius: 8px;
 }
 .nav a:not(.btn):hover { color: var(--ink); background: var(--limestone); }
-.nav a[aria-current="page"]:not(.btn) { color: var(--brick-deep); font-weight: 600; }
+.nav a[aria-current="page"]:not(.btn) { color: var(--brick-pale); font-weight: 600; }
 .nav .btn { margin-left: .4rem; }
 
 .burger {
@@ -198,9 +272,6 @@ p { margin: 0 0 1.1em; }
 
 @media (max-width: 720px) {
   .burger { display: inline-flex; position: relative; z-index: 110; }
-  /* The topbar's backdrop-filter makes it the containing block for this
-     fixed panel, so top/height are relative to the bar — pin an explicit
-     full height rather than relying on inset bottom. */
   .nav {
     position: fixed; top: 0; right: 0; height: 100dvh; z-index: 105;
     width: min(78vw, 20rem);
@@ -209,7 +280,7 @@ p { margin: 0 0 1.1em; }
     padding: 5rem 1.2rem 2rem; transform: translateX(100%);
     transition: transform .24s ease, visibility .24s ease;
     box-shadow: var(--shadow-lift); overflow-y: auto;
-    visibility: hidden;  /* off-screen links aren't tab-focusable when closed */
+    visibility: hidden;
   }
   .nav[data-open="true"] { transform: translateX(0); visibility: visible; }
   .nav a:not(.btn) { font-size: 1rem; padding: .7rem .8rem; }
@@ -217,68 +288,96 @@ p { margin: 0 0 1.1em; }
 }
 @media (prefers-reduced-motion: reduce) { .nav { transition: none; } }
 
-/* ── Hero ──────────────────────────────────────────────────────────── */
-.hero { position: relative; padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(2rem, 5vw, 4rem); }
-.hero-grid {
-  display: grid; grid-template-columns: 1.05fr .95fr; gap: var(--gap);
-  align-items: center;
+/* ── The masthead — the viaduct itself ─────────────────────────────── */
+.masthead {
+  position: relative; overflow: clip;
+  background: linear-gradient(var(--sky-top), var(--sky-bottom));
 }
-.hero h1 { font-size: clamp(2.3rem, 1.6rem + 3.4vw, 4rem); }
-/* signal-green underline on the *asterisked* word */
-.hero h1 .mark {
-  position: relative; white-space: nowrap; color: var(--brick-deep);
+.masthead canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* JS-off / pre-mount fallback: a CSS arch silhouette along the bottom */
+.masthead::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 34%;
+  background:
+    radial-gradient(46% 120% at 50% 112%, transparent 60%, var(--brick-deep) 61%);
+  background-size: 12.5% 100%; background-repeat: repeat-x;
+  border-top: 6px solid #5b2c22;
 }
-.hero h1 .mark::after {
+.masthead.has-canvas::after { display: none; }
+
+.masthead-strip { height: clamp(6.5rem, 13vw, 9rem); }
+
+.masthead-hero { min-height: clamp(34rem, 96vh, 52rem); display: grid; align-items: start; }
+.masthead-hero::after { height: 26%; }
+.mast-content {
+  position: relative; z-index: 2;
+  padding: clamp(1.4rem, 3vw, 2.4rem) 0 clamp(7rem, 20vh, 11rem);
+  max-width: 62rem;
+}
+.mast-content .eyebrow,
+.mast-content .milepost { color: var(--brick-deep); }
+.mast-content h1 {
+  font-size: clamp(2.5rem, 1.8rem + 3.6vw, 5rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: .98;
+  color: var(--mast-ink);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--sky-bottom) 70%, transparent),
+               0 8px 40px color-mix(in srgb, var(--sky-top) 55%, transparent);
+  max-width: 15ch;
+}
+.mast-content h1 .mark { position: relative; white-space: nowrap; color: var(--brick-deep); }
+:root[data-tod="night"] .mast-content h1 .mark,
+:root[data-tod="dusk"] .mast-content h1 .mark { color: var(--brick-pale); }
+.mast-content h1 .mark::after {
   content: ""; position: absolute; left: -.02em; right: -.02em; bottom: .04em;
-  height: .16em; background: var(--signal); border-radius: 3px; opacity: .85;
+  height: .14em; background: var(--signal-glow); border-radius: 3px; opacity: .9;
 }
-.hero .sub { font-size: 1.16rem; color: var(--ink-soft); max-width: 34ch; }
-.hero .actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.4rem; }
-
-/* The generative-viaduct stage. Arch-topped, brick-mortar frame. */
-.hero-stage {
-  position: relative; border-radius: var(--radius);
-  overflow: hidden; border: 1px solid var(--mortar);
-  background: linear-gradient(#cfe0e8, #eadfce);
-  box-shadow: var(--shadow-lift);
-  aspect-ratio: 4 / 3;
+.mast-content .sub {
+  font-size: clamp(1.1rem, 1rem + .6vw, 1.3rem);
+  color: var(--mast-ink); max-width: 44ch;
+  text-shadow: 0 1px 14px color-mix(in srgb, var(--sky-bottom) 60%, transparent);
 }
-.hero-stage canvas { width: 100%; height: 100%; display: block; }
-.hero-stage.is-interactive { cursor: pointer; }
-.hero-note {
-  position: absolute; left: .8rem; bottom: .7rem; margin: 0;
+.mast-content .actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
+.mast-note {
+  position: absolute; right: 0; bottom: clamp(1rem, 4vh, 2.2rem); z-index: 2; margin: 0;
   font-family: var(--mono); font-size: .72rem; letter-spacing: .02em;
-  color: var(--ink); background: color-mix(in srgb, var(--paper) 82%, transparent);
-  padding: .32rem .55rem; border-radius: 7px; backdrop-filter: blur(3px);
-  max-width: 82%;
+  color: var(--ink); background: color-mix(in srgb, var(--paper) 84%, transparent);
+  padding: .34rem .6rem; border-radius: 7px; backdrop-filter: blur(3px);
+  max-width: min(78vw, 30rem);
 }
-/* Static fallback shown when JS is off / reduced motion before the island loads */
-.hero-stage .stage-fallback {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+.masthead-hero .wrap { position: relative; }
+.masthead.has-canvas { cursor: pointer; }
+
+@media (max-width: 720px) {
+  .masthead-hero { min-height: min(88vh, 44rem); }
+  .mast-content { padding-bottom: clamp(10rem, 34vh, 15rem); }
 }
 
-@media (max-width: 860px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-stage { order: -1; aspect-ratio: 16 / 10; }
-  .hero .sub { max-width: none; }
+/* Page title block that follows a strip masthead */
+.page-head { padding: clamp(2rem, 5vw, 3.2rem) 0 0; }
+.page-head h1 { font-size: clamp(2.2rem, 1.6rem + 2.6vw, 3.6rem); }
+.page-head .lede { font-size: 1.22rem; color: var(--ink-soft); max-width: 46ch; }
+
+/* Eyebrow (non-milepost variant, kept for small labels) */
+.eyebrow {
+  font-family: var(--mono); font-size: .74rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--brick); margin: 0 0 .9rem;
 }
 
 /* ── Section scaffolding ───────────────────────────────────────────── */
-.section { padding: clamp(2.4rem, 5vw, 4.2rem) 0; }
-.section-head { max-width: 46rem; margin-bottom: 2rem; }
-.section-head h2 { font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.5rem); }
+.section { padding: clamp(2.6rem, 5.5vw, 4.6rem) 0; }
+.section-head { max-width: 48rem; margin-bottom: 2rem; }
+.section-head h2 { font-size: clamp(1.9rem, 1.4rem + 2vw, 3rem); }
 .section-head p { color: var(--ink-soft); font-size: 1.1rem; margin: 0; }
 .section.alt { background: var(--limestone); }
 
-/* A colonnade divider: repeating arch silhouette between sections */
 .colonnade {
   height: 26px; width: 100%;
-  background:
-    radial-gradient(22px 26px at 50% 100%, var(--paper) 68%, transparent 69%);
+  background: radial-gradient(22px 26px at 50% 100%, var(--paper) 68%, transparent 69%);
   background-size: 44px 26px; background-repeat: repeat-x;
   background-color: var(--brick-deep);
 }
-.colonnade.on-limestone { background-color: var(--brick-deep); }
 .section.alt + .colonnade,
 .colonnade.into-alt {
   background-image: radial-gradient(22px 26px at 50% 100%, var(--limestone) 68%, transparent 69%);
@@ -296,19 +395,37 @@ p { margin: 0 0 1.1em; }
 @media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
 
 /* ── How it works — numbered steps ─────────────────────────────────── */
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; counter-reset: step; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
 @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
 .step { display: flex; gap: 1rem; align-items: flex-start; }
 .step-n {
-  flex: none; width: 2.4rem; height: 2.4rem; display: grid; place-items: center;
-  font-family: var(--display); font-weight: 700; font-size: 1.1rem; color: #fff;
-  background: var(--brick); border-radius: 2.4rem 2.4rem 2.4rem 0 / 2.4rem 2.4rem 2.4rem 0;
+  flex: none; width: 2.8rem; height: 2.8rem; display: grid; place-items: center;
+  font-family: var(--display); font-weight: 800; font-size: 1.3rem; color: #fff;
+  background: var(--brick); border-radius: 2.8rem 2.8rem 2.8rem 0 / 2.8rem 2.8rem 2.8rem 0;
   box-shadow: 0 6px 16px -8px var(--brick-deep);
 }
 .step-body h3 { font-size: 1.2rem; margin-bottom: .3rem; }
 .step-body p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
 
-/* ── Work / case-study cards (arch-topped masks) ───────────────────── */
+/* ── Work — the elevation drawing ──────────────────────────────────── */
+.elevation { position: relative; }
+.elevation .deck-line {
+  height: 10px; background: #5b2c22; border-radius: 3px;
+  box-shadow: 0 2px 0 rgba(36,31,28,.25);
+  margin-bottom: -6px; position: relative; z-index: 1;
+}
+.spans {
+  display: grid; grid-auto-flow: column; grid-auto-columns: min(26rem, 82vw);
+  gap: 1.6rem; overflow-x: auto; padding: 1.4rem .2rem 1.6rem;
+  scroll-snap-type: x proximity; scrollbar-width: thin;
+}
+.spans > * { scroll-snap-align: center; }
+@media (max-width: 760px) {
+  .elevation .deck-line { display: none; }
+  .spans { grid-auto-flow: row; grid-auto-columns: unset; grid-template-columns: 1fr; overflow: visible; }
+}
+
+/* Case cards (arch-topped masks) — used by teasers and the elevation */
 .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
 @media (max-width: 760px) { .work-grid { grid-template-columns: 1fr; } }
 
@@ -320,7 +437,6 @@ p { margin: 0 0 1.1em; }
   text-decoration: none; color: inherit;
 }
 .case:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
-/* the arch-topped image mask */
 .case-shot {
   position: relative; aspect-ratio: 16 / 11; overflow: hidden;
   background: var(--limestone);
@@ -331,7 +447,7 @@ p { margin: 0 0 1.1em; }
 .case-shot .placeholder {
   position: absolute; inset: 0; display: grid; place-items: center;
   color: var(--brick); background:
-    repeating-linear-gradient(0deg, var(--limestone) 0 30px, #e3d8c6 30px 33px);
+    repeating-linear-gradient(0deg, var(--limestone) 0 30px, color-mix(in srgb, var(--limestone) 80%, var(--mortar)) 30px 33px);
   font-family: var(--mono); font-size: .8rem; letter-spacing: .1em;
 }
 .case-body { padding: 1.1rem 1.3rem 1.4rem; }
@@ -343,14 +459,21 @@ p { margin: 0 0 1.1em; }
 .case p { margin: 0; color: var(--ink-soft); font-size: 1.02rem; }
 .case .more {
   margin-top: .9rem; font-family: var(--display); font-weight: 600;
-  color: var(--signal-deep); font-size: .95rem;
+  color: var(--link); font-size: .95rem;
 }
-.case:hover .more { color: var(--signal); }
+.case:hover .more { color: var(--link-hover); }
+
+/* Oversized case numbering on the elevation */
+.case .case-no {
+  position: absolute; top: .4rem; left: .9rem; z-index: 2;
+  font-family: var(--display); font-weight: 800; font-size: 2.6rem;
+  color: color-mix(in srgb, var(--brick) 85%, #fff);
+  text-shadow: 0 2px 12px rgba(36,31,28,.35); line-height: 1;
+}
 
 /* ── Case-study article ────────────────────────────────────────────── */
-.case-hero { padding: clamp(2rem, 5vw, 3.5rem) 0 1rem; }
-.case-hero .eyebrow a { color: var(--brick); }
-.case-hero h1 { font-size: clamp(2rem, 1.5rem + 2.4vw, 3.2rem); }
+.case-hero { padding: clamp(2rem, 5vw, 3.2rem) 0 1rem; }
+.case-hero h1 { font-size: clamp(2.2rem, 1.6rem + 2.8vw, 3.6rem); }
 .case-hero .lede { font-size: 1.24rem; color: var(--ink-soft); max-width: 42ch; }
 .case-figure {
   border-radius: var(--arch) var(--arch) var(--radius) var(--radius) / 6rem 6rem var(--radius) var(--radius);
@@ -377,7 +500,7 @@ p { margin: 0 0 1.1em; }
 .prose details[open] { padding-bottom: .6rem; }
 .prose summary {
   cursor: pointer; padding: .9rem 0; font-family: var(--mono);
-  font-size: .82rem; letter-spacing: .04em; color: var(--brick-deep); font-weight: 600;
+  font-size: .82rem; letter-spacing: .04em; color: var(--brick-pale); font-weight: 600;
 }
 .prose details p { margin: .3rem 0 .9rem; font-size: .98rem; color: var(--ink-soft); }
 
@@ -447,16 +570,15 @@ p { margin: 0 0 1.1em; }
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
 }
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary::after { content: "+"; font-weight: 400; color: var(--brick); font-size: 1.4rem; line-height: 1; }
+.faq-item summary::after { content: "+"; font-weight: 400; color: var(--brick-pale); font-size: 1.4rem; line-height: 1; }
 .faq-item[open] summary::after { content: "–"; }
 .faq-item p { margin: 0 0 1rem; color: var(--ink-soft); font-size: 1.02rem; }
 
 /* ── About ─────────────────────────────────────────────────────────── */
 .about-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--gap); align-items: start; margin-top: 1rem; }
 @media (max-width: 820px) { .about-layout { grid-template-columns: 1fr; } }
-.about-lede { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem); font-family: var(--display); font-weight: 600; line-height: 1.14; letter-spacing: -.02em; color: var(--ink); margin-bottom: 1.2rem; text-wrap: balance; }
+.about-lede { font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem); font-family: var(--display); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; color: var(--ink); margin-bottom: 1.2rem; text-wrap: balance; }
 .about-body { font-size: 1.1rem; }
-/* Arch-topped portrait panel (photo optional) */
 .about-aside { position: sticky; top: 5rem; }
 @media (max-width: 820px) { .about-aside { position: static; max-width: 26rem; } }
 .about-panel {
@@ -505,7 +627,7 @@ p { margin: 0 0 1.1em; }
 .contact-aside .big { font-family: var(--display); font-weight: 700; font-size: 1.4rem; }
 .availability {
   display: inline-flex; align-items: center; gap: .5rem; margin: 1rem 0 0;
-  font-family: var(--mono); font-size: .82rem; color: var(--signal-deep);
+  font-family: var(--mono); font-size: .82rem; color: var(--link);
   background: color-mix(in srgb, var(--signal) 12%, var(--paper));
   border: 1px solid color-mix(in srgb, var(--signal) 30%, var(--mortar));
   padding: .45rem .8rem; border-radius: 999px;
@@ -527,17 +649,17 @@ p { margin: 0 0 1.1em; }
   background-size: 40px 22px; background-repeat: repeat-x;
 }
 .section.alt .cta::before { background-image: radial-gradient(20px 22px at 50% 0, var(--limestone) 68%, transparent 69%); }
-.cta h2 { color: #fff; font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.3rem); }
+.cta h2 { color: #fff; font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.5rem); }
 .cta p { color: #efd9cf; max-width: 42ch; margin-inline: auto; }
 .cta .btn-primary { margin-top: 1rem; }
 
-/* ── Footer (arch colonnade silhouette) ────────────────────────────── */
-.footer { background: var(--ink); color: #cdc3ba; margin-top: 3rem; }
+/* ── Footer (the view from under the arches) ───────────────────────── */
+.footer { background: #191512; color: #cdc3ba; }
 .footer-arches {
-  height: 30px;
+  margin-top: 3rem; height: 30px;
   background: radial-gradient(24px 30px at 50% 100%, var(--paper) 66%, transparent 67%);
   background-size: 48px 30px; background-repeat: repeat-x;
-  background-color: var(--ink);
+  background-color: #191512;
 }
 .footer-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; padding: 2.2rem 0 2.4rem; }
 .footer .wordmark b { color: #fff; }
