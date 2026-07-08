@@ -9,12 +9,27 @@ const about = await getAbout();
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">About</p>
-        <p class="about-lede">{about.lede}</p>
-      </div>
-      <div class="about-body">
-        {about.paragraphs.map((p) => <p>{p}</p>)}
+      <p class="eyebrow">About</p>
+      <div class="about-layout">
+        <div>
+          <p class="about-lede">{about.lede}</p>
+          <div class="about-body">
+            {about.paragraphs.map((p) => <p>{p}</p>)}
+          </div>
+        </div>
+
+        <aside class="about-aside">
+          <div class="about-panel">
+            {about.portrait
+              ? <img src={u(about.portrait)} alt="Kyle, Viaduct Studios" width="600" height="720" />
+              : <div class="about-panel-fill" aria-hidden="true"><span>VS</span></div>}
+          </div>
+          {about.facts.length > 0 && (
+            <ul class="about-facts">
+              {about.facts.map((f) => <li>{f}</li>)}
+            </ul>
+          )}
+        </aside>
       </div>
 
       <div class="values">

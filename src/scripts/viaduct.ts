@@ -135,18 +135,57 @@ function paintDeck(ctx: CanvasRenderingContext2D, sc: Scene, reveal: number) {
   ctx.fillRect(sc.sideMargin, sc.structTop, sc.w - sc.sideMargin * 2, 2);
 }
 
+// Voussoir ring + keystone following each arch's true semicircle, so the
+// curve reads cleanly over the stair-stepped masonry. Fades in over the
+// second half of the build.
+function paintArchRings(ctx: CanvasRenderingContext2D, sc: Scene, reveal: number) {
+  const t = Math.max(0, Math.min(1, (reveal - 0.5) / 0.45));
+  if (t <= 0) return;
+  const ringW = Math.max(6, sc.h * 0.032);
+  ctx.save();
+  ctx.globalAlpha = t;
+  for (const a of sc.arches) {
+    // the ring band along the arch edge
+    ctx.lineWidth = ringW;
+    ctx.strokeStyle = '#6f3227';
+    ctx.beginPath();
+    ctx.arc(a.cx, sc.springY, a.r, Math.PI, 2 * Math.PI);
+    ctx.stroke();
+    // radial mortar lines between voussoirs
+    const n = Math.max(7, Math.round((a.r * Math.PI) / (ringW * 1.6)));
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(36,31,28,.30)';
+    for (let i = 0; i <= n; i++) {
+      const ang = Math.PI + (i / n) * Math.PI;
+      const c = Math.cos(ang), s = Math.sin(ang);
+      ctx.beginPath();
+      ctx.moveTo(a.cx + c * (a.r - ringW / 2), sc.springY + s * (a.r - ringW / 2));
+      ctx.lineTo(a.cx + c * (a.r + ringW / 2), sc.springY + s * (a.r + ringW / 2));
+      ctx.stroke();
+    }
+    // keystone at the apex
+    const kw = ringW * 0.95, kh = ringW * 1.7;
+    ctx.fillStyle = '#844030';
+    ctx.fillRect(a.cx - kw / 2, sc.springY - a.r - ringW * 0.55, kw, kh);
+  }
+  ctx.restore();
+}
+
 function paintTrain(ctx: CanvasRenderingContext2D, sc: Scene, t: number) {
-  // t in [0,1]: a small train slides across the deck
-  const deckY = sc.structTop - sc.h * 0.055;
-  const carW = sc.w * 0.06, carH = sc.h * 0.05, n = 3;
-  const trainW = carW * n + 6 * (n - 1);
+  // t in [0,1]: a little train slides across the deck
+  const carH = sc.h * 0.062;
+  const deckY = sc.structTop - carH - sc.h * 0.006;
+  const carW = sc.w * 0.075, gap = 7, n = 3;
+  const trainW = carW * n + gap * (n - 1);
   const x = -trainW + t * (sc.w + trainW);
   for (let i = 0; i < n; i++) {
+    const cx = x + i * (carW + gap);
     ctx.fillStyle = i === 0 ? '#0f7a52' : '#123c31';
-    const cx = x + i * (carW + 6);
     ctx.fillRect(cx, deckY, carW, carH);
-    ctx.fillStyle = 'rgba(244,239,230,.75)';
-    ctx.fillRect(cx + carW * 0.12, deckY + carH * 0.2, carW * 0.76, carH * 0.34);
+    ctx.fillStyle = 'rgba(244,239,230,.8)';        // windows
+    ctx.fillRect(cx + carW * 0.12, deckY + carH * 0.22, carW * 0.76, carH * 0.32);
+    ctx.fillStyle = 'rgba(36,31,28,.5)';           // wheels line
+    ctx.fillRect(cx + carW * 0.1, deckY + carH, carW * 0.8, sc.h * 0.006);
   }
 }
 
@@ -181,6 +220,7 @@ export function mountViaduct(stage: HTMLElement, opts: { animate: boolean }) {
       ctx.fillStyle = b.fill;
       ctx.fillRect(b.x, b.y, b.w, b.h);
     }
+    paintArchRings(ctx, sc, reveal);
     paintDeck(ctx, sc, reveal);
     if (train >= 0) paintTrain(ctx, sc, train);
   };
@@ -209,7 +249,7 @@ export function mountViaduct(stage: HTMLElement, opts: { animate: boolean }) {
     trainTimer = window.setTimeout(() => {
       if (!visible) { scheduleTrain(); return; }
       const start = performance.now();
-      const dur = 4200;
+      const dur = 4600;
       const step = (now: number) => {
         const t = (now - start) / dur;
         if (t >= 1) { drawFrame(1); scheduleTrain(); return; }
@@ -217,7 +257,7 @@ export function mountViaduct(stage: HTMLElement, opts: { animate: boolean }) {
         raf = requestAnimationFrame(step);
       };
       raf = requestAnimationFrame(step);
-    }, 6000 + Math.random() * 6000);
+    }, 3500 + Math.random() * 3500);
   }
 
   // pause train loop when the hero is off-screen

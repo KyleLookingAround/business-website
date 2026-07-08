@@ -36,6 +36,8 @@ const settings = defineCollection({
     region: z.string(),
     email: z.string().email(),
     formAction: z.string().default(''),
+    // Optional honest availability line shown near the contact CTA.
+    availability: z.string().default(''),
     links: z.object({
       github: optionalUrl.default(''),
       linkedin: optionalUrl.default(''),
@@ -53,6 +55,7 @@ const home = defineCollection({
       note: z.string().default(''),
     }),
     pillars: z.array(z.object({ title: z.string(), body: z.string() })).length(3, 'three pillars'),
+    process: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
     cta: z.object({ heading: z.string(), body: z.string() }),
   }),
 });
@@ -64,7 +67,6 @@ const services = defineCollection({
     packages: z.array(z.object({
       name: z.string(),
       kind: z.string(),
-      price: z.string(),
       blurb: z.string(),
       includes: z.array(z.string()).min(1),
     })).min(1),
@@ -77,6 +79,11 @@ const about = defineCollection({
   schema: z.object({
     lede: z.string(),
     paragraphs: z.array(z.string()).min(1),
+    // Optional portrait for the About panel; a styled brick/arch panel shows
+    // in its place until a photo is added.
+    portrait: image.optional(),
+    // The "short version" facts shown beside the story.
+    facts: z.array(z.string()).default([]),
     values: z.array(z.object({ title: z.string(), body: z.string() })).min(1),
   }),
 });
@@ -94,9 +101,17 @@ const work = defineCollection({
     featured: z.boolean().default(false),
     summary: z.string(),
     stack: z.string().default(''),
+    results: z.array(z.string()).default([]),
     testimonial: z.string().default(''),
     testimonialBy: z.string().default(''),
   }),
 });
 
-export const collections = { settings, home, services, about, work };
+const faq = defineCollection({
+  loader: single('content/faq.yml'),
+  schema: z.object({
+    items: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+  }),
+});
+
+export const collections = { settings, home, services, about, work, faq };

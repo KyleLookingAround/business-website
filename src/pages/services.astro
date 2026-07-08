@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getSettings, getServices, u } from '../lib/site';
+import { getSettings, getServices, getFaq, faqJsonLd, u } from '../lib/site';
 
 const s = await getSettings();
 const svc = await getServices();
+const faq = await getFaq();
 ---
-<Base title={`Services — ${s.name}`} description="Three ways to work with Viaduct Studios — plainly described, plainly priced. Every site is handmade, fast, and yours to edit." nav="services" page="services.html">
+<Base title={`Services — ${s.name}`} description="Three ways to work with Viaduct Studios — handmade, fast, and yours to edit. Every project quoted individually." nav="services" page="services.html">
 
   <section class="section">
     <div class="wrap">
@@ -20,12 +21,11 @@ const svc = await getServices();
           <article class="pkg">
             <span class="kind">{p.kind}</span>
             <h3>{p.name}</h3>
-            <p class="price">{p.price}</p>
             <p class="blurb">{p.blurb}</p>
             <ul>
               {p.includes.map((it) => <li>{it}</li>)}
             </ul>
-            <a class="btn btn-ghost btn-block" href={u('contact.html')}>Enquire</a>
+            <a class="btn btn-ghost btn-block" href={u('contact.html')}>Enquire about {p.name}</a>
           </article>
         ))}
       </div>
@@ -34,7 +34,27 @@ const svc = await getServices();
     </div>
   </section>
 
-  <section class="section alt">
+  {faq.length > 0 && (
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Questions</p>
+          <h2>The things people ask.</h2>
+        </div>
+        <div class="faq">
+          {faq.map((item) => (
+            <details class="faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+      <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(faq)).replace(/</g, '\\u003c')} />
+    </section>
+  )}
+
+  <section class="section">
     <div class="wrap">
       <div class="cta">
         <h2>Not sure which one?</h2>

@@ -10,10 +10,18 @@ paragraphs:
   - "It started with a coffee shop. A friend opened one — brilliant coffee, no website, no time. So I built one: fast, warm, and editable from her phone between customers. Then a band needed one. Then it turned out lots of small places around Manchester are stuck choosing between a £30-a-month template that looks like everyone else's, and an agency quote with a comma in it."
   - "Viaduct Studios is the third option: handmade sites that load instantly, look like the place they belong to, and hand the keys back to you. Named after the Stockport viaduct — twenty-seven brick arches, built by hand, still carrying everything that matters a hundred and eighty years later. That's the standard."
 
+# The "short version" shown beside the story. Add a photo of yourself later
+# via `portrait: /assets/kyle.jpg` and it'll replace the brick panel.
+facts:
+  - "Based in Stockport, Greater Manchester"
+  - "Software engineer by day"
+  - "Builds on Astro — fast, static, no lock-in"
+  - "Your site and domain, in your name"
+
 values:
   - title: "Built to last"
     body: "No frameworks-of-the-month, no subscriptions holding your site hostage. Plain, sturdy engineering that will still work in ten years."
   - title: "No airs"
-    body: "Plain English, real prices, honest advice — including \"you don't need this\" when you don't."
+    body: "Plain English, honest advice and a straight answer on cost — including \"you don't need this\" when you don't."
   - title: "Local by default"
     body: "Sites for round here, by someone from round here. The photos are of your actual shop and the map pin is exactly right."

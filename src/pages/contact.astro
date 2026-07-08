@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getSettings, encodeMail } from '../lib/site';
+import { getSettings, getHome, encodeMail } from '../lib/site';
+import Steps from '../components/Steps.astro';
 
 const s = await getSettings();
+const home = await getHome();
 const hasForm = s.formAction.trim().length > 0;
 const mail = encodeMail(s.email, 'Website enquiry');
 ---
@@ -14,6 +16,7 @@ const mail = encodeMail(s.email, 'Website enquiry');
         <p class="eyebrow">Contact</p>
         <h2>Tell us about your place.</h2>
         <p>A café, a band, a shop, a plan on the back of a napkin — whatever it is, drop a line and you'll get a real reply from a real person.</p>
+        {s.availability && <p class="availability">{s.availability}</p>}
       </div>
 
       <div class="contact-grid">
@@ -53,5 +56,20 @@ const mail = encodeMail(s.email, 'Website enquiry');
       </div>
     </div>
   </section>
+
+  {home.process.length > 0 && (
+    <>
+      <div class="colonnade into-alt" aria-hidden="true"></div>
+      <section class="section alt">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">How it works</p>
+            <h2>What happens after you send that email.</h2>
+          </div>
+          <Steps steps={home.process} />
+        </div>
+      </section>
+    </>
+  )}
 
 </Base>

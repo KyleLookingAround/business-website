@@ -27,6 +27,9 @@ email: "KyleMck10@hotmail.com"
 # contact page from an email button to a real form. Blank = email button.
 formAction: ""
 
+# A short, honest availability line shown near the contact CTA. Blank = hidden.
+availability: "Currently taking on a couple of new projects a month."
+
 # ── Links (blank = hidden) ──────────────────────────────────────────
 links:
   github: "https://github.com/KyleLookingAround"
