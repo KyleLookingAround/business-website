@@ -1,4 +1,4 @@
-# Kyle · Things I've made
+# Made in Stockport
 
 A one-page portfolio of two websites and four games:
 

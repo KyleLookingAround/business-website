@@ -1,4 +1,4 @@
-/* Kyle · Made in Stockport
+/* Made in Stockport
    One page, six themes. The field at the top holds every project in a
    blot of its own colours, bleeding into its neighbours. Below it, each
    project is a poster in its own palette and type, and each poster starts
@@ -77,7 +77,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .field { display: grid; place-items: center; }
 .blobs { position: absolute; inset: 0; z-index: -1; }
 .intro { position: relative; text-align: center; color: #fff; padding: 0 var(--gutter); }
-.intro h1 { font: 800 clamp(7rem, 26vw, 20rem)/.8 "Saira Condensed", sans-serif; text-transform: uppercase; letter-spacing: .02em; mix-blend-mode: overlay; }
+.intro h1 { font: 800 clamp(4.4rem, 15vw, 14rem)/.82 "Saira Condensed", sans-serif; text-transform: uppercase; letter-spacing: .02em; mix-blend-mode: overlay; }
 .intro p { margin-top: 18px; font: 600 clamp(12px, 1.4vw, 15px)/1.4 var(--mono); letter-spacing: .3em; text-transform: uppercase; }
 .down { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font: 600 22px/1 var(--mono); color: var(--fc-text); text-decoration: none; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translate(-50%, 6px); } }

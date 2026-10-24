@@ -1,4 +1,4 @@
-// Kyle · Things I've made: the small bits of life on the page.
+// Made in Stockport: the small bits of life on the page.
 // Everything here is decoration; the page reads fine without it.
 (() => {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
