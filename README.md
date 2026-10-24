@@ -11,14 +11,10 @@ A one-page portfolio of two websites and four games:
 | Door Duty | Crowd-science puzzle tycoon about fitting entrances | https://kylelookingaround.github.io/door-duty-game/ |
 | Final Call | Airport management game | https://kylelookingaround.github.io/final-call/ |
 
-The top of the page lists all six. Below it, each project gets a zone in its
-own palette and type (taken from that project's own colour tokens), with a
-small piece of its world drawn round it: the café awning and a steaming cup,
-radio waves and a tuning dial, an island village with villagers walking its
-lanes, the Stockport viaduct with a train crossing as the day turns to dusk,
-a high street with a revolving door, and a departures board. Each zone's
-background starts on the colour the one above it ended on, so the themes run
-into each other.
+The top of the page is a field of all six names, each in its own type, sitting
+in a blot of its colours that bleeds into its neighbours. Below that, each
+project is a poster in its own palette with a piece of its world drawn round
+it, and each poster starts on the colour the last one ended on.
 
 ## Files
 
