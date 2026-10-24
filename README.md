@@ -11,8 +11,8 @@ A one-page portfolio of two websites and four games:
 | Door Duty | Crowd-science puzzle tycoon about fitting entrances | https://kylelookingaround.github.io/door-duty-game/ |
 | Final Call | Airport management game | https://kylelookingaround.github.io/final-call/ |
 
-The top of the page is a field of all six names, each in its own type, sitting
-in a blot of its colours that bleeds into its neighbours. Below that, each
+The top of the page is a field of all six projects' colours bleeding into
+each other. Below that, each
 project is a poster in its own palette with a piece of its world drawn round
 it, and each poster starts on the colour the last one ended on.
 

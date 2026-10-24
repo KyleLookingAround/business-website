@@ -74,27 +74,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .b-fc { --c: #0a0c0f; left: 82%; top: 94%; animation-delay: -17s !important; }
 @keyframes float { to { transform: translate(4vmax, -3vmax) scale(1.08); } }
 
-.sig { position: absolute; right: var(--gutter); bottom: 28px; text-align: right; font: 800 22px/1 "Saira Condensed", sans-serif; text-transform: uppercase; letter-spacing: .12em; color: var(--fc-text); }
-.sig span { font: 400 12px/1.6 var(--mono); letter-spacing: .16em; color: var(--fc-muted); }
-
-.names li { position: absolute; transform: rotate(var(--r)); }
-.names a { display: inline-block; text-decoration: none; line-height: .9; transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
-.names a:hover, .names a:focus-visible { transform: scale(1.08) rotate(calc(var(--r) * -1)); }
-.names small { display: block; margin-top: 10px; font: 600 11px/1 var(--mono); letter-spacing: .3em; text-transform: uppercase; opacity: .7; }
-
-.n-rn { --r: -7deg; left: 7%; top: 12%; color: var(--rn-brick); }
-.n-rn a { font: 900 clamp(3rem, 8vw, 7.4rem) "Archivo", sans-serif; font-stretch: 125%; text-shadow: .05em .06em 0 var(--rn-biscuit); }
-.n-hr { --r: 4deg; left: 55%; top: 9%; color: var(--hr-ink); }
-.n-hr a { font: 600 clamp(2.6rem, 6.4vw, 6rem) "Fraunces", serif; letter-spacing: -0.04em; }
-.n-hr b { color: var(--hr-rose); font-weight: 600; }
-.n-hw { --r: 2deg; left: 5%; top: 45%; color: var(--hw-brass-hi); }
-.n-hw a { font: 800 clamp(2.6rem, 6.4vw, 6rem) "Alegreya Sans SC", sans-serif; letter-spacing: .02em; text-shadow: 0 4px 0 rgba(0,0,0,.25); }
-.n-tc { --r: -3deg; left: 50%; top: 41%; color: #fff; }
-.n-tc a { font: 900 clamp(2.6rem, 6.4vw, 6rem) "Overpass", sans-serif; letter-spacing: -0.03em; text-shadow: 0 4px 0 var(--tc-zenith); }
-.n-dd { --r: -2deg; left: 11%; top: 72%; color: var(--dd-brass); }
-.n-dd a { font: 400 clamp(2.8rem, 7vw, 6.6rem) "Limelight", serif; }
-.n-fc { --r: 3deg; left: 57%; top: 70%; color: var(--fc-sign); }
-.n-fc a { font: 800 clamp(2.8rem, 7vw, 6.6rem) "Saira Condensed", sans-serif; text-transform: uppercase; letter-spacing: .03em; }
+.field { display: grid; place-items: center; }
+.blobs { position: absolute; inset: 0; z-index: -1; }
+.intro { position: relative; text-align: center; color: #fff; padding: 0 var(--gutter); }
+.intro h1 { font: 800 clamp(7rem, 26vw, 20rem)/.8 "Saira Condensed", sans-serif; text-transform: uppercase; letter-spacing: .02em; mix-blend-mode: overlay; }
+.intro p { margin-top: 18px; font: 600 clamp(12px, 1.4vw, 15px)/1.4 var(--mono); letter-spacing: .3em; text-transform: uppercase; }
 .down { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font: 600 22px/1 var(--mono); color: var(--fc-text); text-decoration: none; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translate(-50%, 6px); } }
 
@@ -277,13 +261,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .cup { opacity: .4; }
 }
 @media (max-width: 700px) {
-  .field { padding: 64px var(--gutter) 120px; }
-  .names { position: relative; display: flex; flex-direction: column; gap: 34px; }
-  .names li { position: static; }
-  .names li:nth-child(even) { align-self: flex-end; text-align: right; }
   .b-rn { left: 20%; top: 6%; } .b-hr { left: 85%; top: 22%; } .b-hw { left: 10%; top: 40%; }
   .b-tc { left: 90%; top: 58%; } .b-dd { left: 15%; top: 76%; } .b-fc { left: 85%; top: 96%; }
-  .sig { bottom: 24px; }
   .down { display: none; }
   .dots { display: none; }
   .rows a { grid-template-columns: 5ch minmax(0, 1fr); row-gap: 4px; }
