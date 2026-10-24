@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /business-website/admin/
-
-Sitemap: https://kylelookingaround.github.io/business-website/sitemap-index.xml
