@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Commute · Kyle</title>
+<meta name="description" content="A transport tycoon on the real line from Stockport to Manchester Piccadilly.">
+<meta property="og:title" content="The Commute · Kyle">
+<meta property="og:description" content="A transport tycoon on the real line from Stockport to Manchester Piccadilly.">
+<meta property="og:image" content="https://kylelookingaround.github.io/business-website/assets/og.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f3ead8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23882603'/%3E%3Cstop offset='.35' stop-color='%23DF8090'/%3E%3Cstop offset='.65' stop-color='%239ccbee'/%3E%3Cstop offset='1' stop-color='%23FFC72C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M12 50V30a20 20 0 0 1 40 0v20' fill='none' stroke='%2314171B' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Caveat:wght@600&family=Alegreya+Sans+SC:wght@500;800&family=Overpass:wght@500;800;900&family=Overpass+Mono:wght@500&family=Limelight&family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page p-tc">
+
+<a class="home" href="./">← Kyle</a>
+
+<main>
+<section class="zone z-tc" aria-labelledby="tc-h">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="clouds" aria-hidden="true"><i></i><i></i><i></i></div>
+  <h1 id="tc-h" class="big">The Commute</h1>
+  <div class="row flip">
+    <a class="card" href="https://kylelookingaround.github.io/the-commute/" style="--tilt:2deg"><img src="assets/the-commute.webp" width="960" height="600" alt="The Commute game" loading="lazy"></a>
+    <div class="say">
+      <a class="ticket" href="https://kylelookingaround.github.io/the-commute/">
+        <span class="t-top">Single · Anytime</span>
+        <span class="t-route">Stockport <i>→</i> Piccadilly</span>
+        <span class="t-foot">Play ↗</span>
+      </a>
+      <a class="code" href="https://github.com/KyleLookingAround/the-commute">Code</a>
+    </div>
+  </div>
+  <svg class="viaduct" viewBox="0 0 1600 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <pattern id="arches" width="80" height="200" patternUnits="userSpaceOnUse" x="0" y="60">
+        <path d="M0 0h80v200h-14V96a26 26 0 0 0-52 0v104H0z" />
+      </pattern>
+    </defs>
+    <g class="train"><rect x="0" y="22" width="300" height="34" rx="10"/><rect class="win" x="14" y="30" width="270" height="10" rx="3"/></g>
+    <rect class="deck" x="0" y="56" width="1600" height="8"/>
+    <rect x="0" y="64" width="1600" height="196" fill="url(#arches)"/>
+  </svg>
+</section>
+
+<section class="detail">
+  <div class="detail-in">
+    <a class="phone" href="https://kylelookingaround.github.io/the-commute/"><img src="assets/the-commute-phone.webp" width="390" height="780" alt="The Commute on a phone" loading="lazy"></a>
+    <div class="facts">
+      <ul class="notes"><li>The real line, in 3D</li><li>Every purchase shows on the map</li><li>A day that turns overhead</li></ul>
+      <dl>
+        <div><dt>What</dt><dd>Game · transport tycoon</dd></div>
+        <div><dt>My part</dt><dd>Design &amp; code</dd></div>
+        <div><dt>Built with</dt><dd><ul class="built"><li>Three.js</li><li>TypeScript</li><li>Vite</li></ul></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<a class="next to-dd" href="door-duty.html">
+  <span class="next-k">Next</span>
+  <span class="next-name">Door Duty</span>
+</a>
+
+<script src="app.js" defer></script>
+</body>
+</html>

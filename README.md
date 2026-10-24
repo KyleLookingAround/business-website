@@ -11,18 +11,21 @@ A one-page portfolio of two websites and four games:
 | Door Duty | Crowd-science puzzle tycoon about fitting entrances | https://kylelookingaround.github.io/door-duty-game/ |
 | Final Call | Airport management game | https://kylelookingaround.github.io/final-call/ |
 
-The top of the page is a field of all six projects' colours bleeding into
-each other. Below that, each
-project is a poster in its own palette with a piece of its world drawn round
-it, and each poster starts on the colour the last one ended on.
+The home page is a field of all six projects' colours bleeding into each
+other, then a poster for each project in its own palette, each starting on
+the colour the last one ended on. Each project also has its own page: the
+poster, a phone screenshot, three notes and what it's built with, and at
+the bottom the colours run into the next project.
 
 ## Files
 
 ```
-site/index.html    the page
+site/index.html    the home page
+site/<project>.html  a page per project (rannys, hospital-radio, hearthworks,
+                   the-commute, door-duty, final-call)
 site/styles.css    every theme's colours as tokens at the top, then one block per zone
 site/app.js        decoration only: the dot nav, the Hearthworks island, the departures board
-site/assets/       screenshots of each project (960×600 webp) and og.png for link previews
+site/assets/       screenshots of each project (960×600 and a 390×780 phone shot, webp) and og.png for link previews
 ```
 
 No build step and no dependencies. Open `site/index.html` in a browser, or
